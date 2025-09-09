@@ -1,0 +1,44 @@
+{
+  "name": "cc-config-switch",
+  "version": "1.0.0",
+  "description": "Claude Code 配置切换工具",
+  "main": "dist/index.js",
+  "bin": {
+    "cc-config": "./bin/cc-config.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node src/index.ts",
+    "start": "node dist/index.js",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build"
+  },
+  "keywords": [
+    "claude",
+    "config",
+    "cli",
+    "anthropic"
+  ],
+  "author": "duoshilin",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "commander": "^11.1.0",
+    "fs-extra": "^11.1.1",
+    "open": "^9.1.0"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^11.0.4",
+    "@types/node": "^20.10.0",
+    "ts-node": "^10.9.1",
+    "typescript": "^5.3.2"
+  },
+  "engines": {
+    "node": ">=16.0.0"
+  },
+  "files": [
+    "dist/",
+    "bin/",
+    "examples/"
+  ]
+}
