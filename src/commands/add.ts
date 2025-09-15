@@ -82,6 +82,18 @@ export async function addCommand(profileName?: string): Promise<void> {
       }
     }
     
+    // 获取 Base URL
+    while (!input.baseUrl) {
+      const baseUrlInput = await question(rl, `请输入 Base URL: `);
+      if (baseUrlInput) {
+        if (!isValidUrl(baseUrlInput)) {
+          Logger.error('无效的 URL 格式');
+          continue;
+        }
+        input.baseUrl = baseUrlInput;
+      }
+    }
+    
     // 获取 Token
     while (!input.token) {
       const token = await question(rl, '请输入 Anthropic Auth Token: ');
@@ -92,22 +104,9 @@ export async function addCommand(profileName?: string): Promise<void> {
       input.token = token;
     }
     
-    // 获取 Base URL（可选）
-    const baseUrlInput = await question(rl, `请输入 Base URL (默认: ${DEFAULT_VALUES.BASE_URL}): `);
-    if (baseUrlInput) {
-      if (!isValidUrl(baseUrlInput)) {
-        Logger.error('无效的 URL 格式');
-        rl.close();
-        process.exit(1);
-      }
-      input.baseUrl = baseUrlInput;
-    }
-    
     // 获取模型（可选）
-    const modelInput = await question(rl, `请输入模型名称 (默认: 不设置): `);
-    if (modelInput) {
-      input.model = modelInput;
-    }
+    const modelInput = await question(rl, `请输入模型名称（回车跳过该项）: `);
+    input.model = modelInput;
     
     rl.close();
     
@@ -127,6 +126,7 @@ export async function addCommand(profileName?: string): Promise<void> {
     
     console.log();
     Logger.info(`使用 "cc-config use ${input.name}" 切换到此配置`);
+    console.log();
     
   } catch (error) {
     rl.close();
